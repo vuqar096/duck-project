@@ -1,7 +1,11 @@
-from pynput.keyboard import Key, Listener
+from pynput.keyboard import Key, Listener, Controller
 import duck_console as dc
 
-print('keyboard started')
+keyboard = Controller()
+
+def press(button):
+    if button == 'backspace':
+        keyboard.type('hello')
 
 def on_press(key):
     dc.append_keys(key)

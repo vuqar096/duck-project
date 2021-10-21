@@ -1,6 +1,6 @@
 last_20_keys = []
 next_20_keys = []
-
+command_list = ['statcond','sendmail','vugario']
 
 
 print('duck_console started')
@@ -20,7 +20,23 @@ def append_keys(key_code):
         last_20_keys.append(key)
     else:
         last_20_keys.append(key)
+    check_command(key)
     check_duck()
+
+
+def check_command(key):
+    global next_20_keys
+
+    if len(next_20_keys) > 0:
+        next_20_keys.append(key)
+        if len(next_20_keys) == 20:
+            next_20_keys.clear()
+        command = "".join(next_20_keys[1:len(next_20_keys)])
+        if command in command_list:
+            import keyboard_ctrl as kc
+            # print(command)
+            kc.press('backspace')
+            next_20_keys.clear()
 
 def check_duck():
     start = len(last_20_keys)-5
@@ -29,3 +45,5 @@ def check_duck():
         if ''.join(last_20_keys[-4:]) == 'duck':
             print('duck activated')
             sound('beep')
+            next_20_keys.clear()
+            next_20_keys.append('x')
