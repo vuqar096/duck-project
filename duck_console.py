@@ -34,9 +34,9 @@ def check_command(key):
         command = "".join(next_20_keys[1:len(next_20_keys)])
         if command in command_list:
             import keyboard_ctrl as kc
-            # print(command)
-            kc.press('backspace')
+            kc.npress(kc.Key.backspace,len('duck'+command))
             next_20_keys.clear()
+
 
 def check_duck():
     start = len(last_20_keys)-5

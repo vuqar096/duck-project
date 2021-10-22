@@ -1,22 +1,10 @@
-from pynput.keyboard import Key, Listener, Controller
-import duck_console as dc
+import time
+
+from pynput.keyboard import Key, Controller
 
 keyboard = Controller()
 
-def press(button):
-    if button == 'backspace':
-        keyboard.type('hello')
-
-def on_press(key):
-    dc.append_keys(key)
-
-def on_release(key):
-    if key == Key.esc:
-        # Stop listener
-        return False
-
-def check_key(key):
-    print(key)
-
-with Listener(on_press=on_press, on_release=on_release) as listener:
-    listener.join()
+def npress(button,ntimes=1):
+        for i in range(1,ntimes):
+            time.sleep(0.01)
+            keyboard.press(button)
