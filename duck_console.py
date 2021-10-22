@@ -1,6 +1,5 @@
 last_20_keys = []
 next_20_keys = []
-command_list = ['statcond','sendmail','vugario']
 
 
 print('duck_console started')
@@ -32,9 +31,9 @@ def check_command(key):
         if len(next_20_keys) == 20:
             next_20_keys.clear()
         command = "".join(next_20_keys[1:len(next_20_keys)])
-        if command in command_list:
-            import keyboard_ctrl as kc
-            kc.npress(kc.Key.backspace,len('duck'+command))
+        import duck_commands as dcm
+        if command in dcm.command_list:
+
             next_20_keys.clear()
 
 
