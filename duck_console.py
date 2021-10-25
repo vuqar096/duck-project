@@ -1,12 +1,15 @@
 last_20_keys = []
 next_20_keys = []
 
+global magic_word
+magic_word = 'duck'
+
 
 print('duck_console started')
 
 def sound(x):
     import winsound as ws
-    if x != 'duck':
+    if x != magic_word:
         ws.Beep(frequency=1000, duration=250)
     else:
         ws.PlaySound('duck.wav',ws.SND_FILENAME)
@@ -33,7 +36,8 @@ def check_command(key):
         command = "".join(next_20_keys[1:len(next_20_keys)])
         import duck_commands as dcm
         if command in dcm.command_list:
-
+            for i in dcm.dcl.command_list:
+                i.exec()
             next_20_keys.clear()
 
 
@@ -41,7 +45,7 @@ def check_duck():
     start = len(last_20_keys)-5
     stop = len(last_20_keys) - 1
     if len(last_20_keys) >3:
-        if ''.join(last_20_keys[-4:]) == 'duck':
+        if ''.join(last_20_keys[-4:]) == magic_word:
             print('duck activated')
             sound('beep')
             next_20_keys.clear()

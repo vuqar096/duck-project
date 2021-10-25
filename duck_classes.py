@@ -1,7 +1,13 @@
+from pynput import keyboard
+
+
 class command:
 
     global command_types
-    command_types = ['past', 'application']
+    command_types = ['copypast', 'application']
+    global command_list
+    command_list = []
+
 
     def __init__(self, command_name, command_type, command_func):
 
@@ -14,6 +20,9 @@ class command:
         else:
             raise ValueError('command type is not correct.')
         self.command_func = command_func
+        command_list.append(self)
 
     def exec(self):
-        self.command_func()
+        self.command_func(self)
+
+    ####### built-in functions ########
