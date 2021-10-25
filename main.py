@@ -1,4 +1,4 @@
 import system_tray
-import duck_windows
+import keyboard_listen
 
 print('main started')

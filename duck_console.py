@@ -1,5 +1,6 @@
-last_20_keys = []
-next_20_keys = []
+duck_command = []
+command1 = []
+variable1 = []
 
 global magic_word
 magic_word = 'duck'
@@ -14,39 +15,66 @@ def sound(x):
     else:
         ws.PlaySound('duck.wav',ws.SND_FILENAME)
 
+def listen4(command):
+    None
+
+def key2asterix(key):
+    x = ['Key.space']
+    y = ['*']
+    result = ''
+    for a,b in zip(x,y):
+        key = str(key).replace(a,b)
+    return key
+
 def append_keys(key_code):
-    global last_20_keys
+    global duck_command
     key = str(key_code).replace(r"'",'')
-    if len(last_20_keys) == 20:
-        last_20_keys.pop(0)
-        last_20_keys.append(key)
+    key = key2asterix(key)
+    if len(duck_command) == 20:
+        duck_command.pop(0)
+        duck_command.append(key)
     else:
-        last_20_keys.append(key)
-    check_command(key)
+        duck_command.append(key)
+    check_variable1(key)
+    check_command1(key)
     check_duck()
 
 
-def check_command(key):
-    global next_20_keys
+def check_command1(key):
+    global command1
 
-    if len(next_20_keys) > 0:
-        next_20_keys.append(key)
-        if len(next_20_keys) == 20:
-            next_20_keys.clear()
-        command = "".join(next_20_keys[1:len(next_20_keys)])
+    if len(command1) > 0:
+        command1.append(key)
+        if len(command1) == 10:
+            command1.clear()
+        command = "".join(command1[1:len(command1)])
         import duck_commands as dcm
         if command in dcm.command_list:
             for i in dcm.dcl.command_list:
-                i.exec()
-            next_20_keys.clear()
+                # i.exec()
+                sound('beep')
+                variable1.clear()
+                variable1.append('x')
 
+            command1.clear()
+
+def check_variable1(key):
+    global variable1
+
+    if len(variable1) > 0:
+        variable1.append(key)
+        if len(variable1) == 20:
+            variable1.clear()
+        command = "".join(variable1[1:len(variable1)])
+        print(command)
+        #
 
 def check_duck():
-    start = len(last_20_keys)-5
-    stop = len(last_20_keys) - 1
-    if len(last_20_keys) >3:
-        if ''.join(last_20_keys[-4:]) == magic_word:
+    start = len(duck_command) - 5
+    stop = len(duck_command) - 1
+    if len(duck_command) >3:
+        if ''.join(duck_command[-4:]) == magic_word:
             print('duck activated')
             sound('beep')
-            next_20_keys.clear()
-            next_20_keys.append('x')
+            command1.clear()
+            command1.append('x')
