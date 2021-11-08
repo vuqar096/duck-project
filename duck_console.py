@@ -1,4 +1,6 @@
-duck_command = []
+cmd_line = []
+cmd_seperated = []
+
 command1 = []
 variable1 = []
 
@@ -15,8 +17,6 @@ def sound(x):
     else:
         ws.PlaySound('duck.wav',ws.SND_FILENAME)
 
-def listen4(command):
-    None
 
 def key2asterix(key):
     x = ['Key.space']
@@ -27,17 +27,19 @@ def key2asterix(key):
     return key
 
 def append_keys(key_code):
-    global duck_command
+    global cmd_line, cmd_seperated
     key = str(key_code).replace(r"'",'')
     key = key2asterix(key)
-    if len(duck_command) == 20:
-        duck_command.pop(0)
-        duck_command.append(key)
+    if len(cmd_line) == 20:
+        cmd_line.pop(0)
+        cmd_line.append(key)
     else:
-        duck_command.append(key)
-    check_variable1(key)
-    check_command1(key)
+        cmd_line.append(key)
+    cmd_seperated = ''.join(cmd_line).split('*')
+
+    check_command(cmd_seperated)
     check_duck()
+
 
 
 def check_command1(key):
@@ -48,8 +50,9 @@ def check_command1(key):
         if len(command1) == 10:
             command1.clear()
         command = "".join(command1[1:len(command1)])
+        last_symbol = command1[-1:]
         import duck_commands as dcm
-        if command in dcm.command_list:
+        if command in dcm.command_list and last_symbol=='*':
             for i in dcm.dcl.command_list:
                 # i.exec()
                 sound('beep')
@@ -58,23 +61,30 @@ def check_command1(key):
 
             command1.clear()
 
-def check_variable1(key):
-    global variable1
+def check_command(x):
+    from duck_commands import command_list as cl
+    global magic_word
+    global cmd_line
+    try:
+        finded_cmd_value = ''.join([i for i in x if len([a for a in cl if i == a]) > 0])
+        if finded_cmd_value!='':
+            cmd_index = cmd_seperated.index(finded_cmd_value)
+            # print(str(cmd_seperated[cmd_index - 1]))
+            if str(cmd_seperated[cmd_index-1]).find(magic_word)>-1:
+                print('----------')
+                print('cmd_line:', cmd_line)
+                print('cmd_seperated:',cmd_seperated)
+                print('cmd_index:',cmd_index)
+            cmd_line = []
 
-    if len(variable1) > 0:
-        variable1.append(key)
-        if len(variable1) == 20:
-            variable1.clear()
-        command = "".join(variable1[1:len(variable1)])
-        print(command)
-        #
+    except:
+        None
+
 
 def check_duck():
-    start = len(duck_command) - 5
-    stop = len(duck_command) - 1
-    if len(duck_command) >3:
-        if ''.join(duck_command[-4:]) == magic_word:
-            print('duck activated')
+    if len(cmd_line) > 3:
+        if cmd_seperated[-1][-4:] == magic_word:
+            print('duck activated2')
             sound('beep')
             command1.clear()
             command1.append('x')
