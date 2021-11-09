@@ -62,15 +62,17 @@ def check_command1(key):
             command1.clear()
 
 def check_command(x):
-    from duck_commands import command_list as cl
+    import duck_commands as dc
     global magic_word
     global cmd_line
     try:
-        finded_cmd_value = ''.join([i for i in x if len([a for a in cl if i == a]) > 0])
+        finded_cmd_value = ''.join([i for i in x if len([a for a in dc.command_list if i == a]) > 0])
         if finded_cmd_value!='':
             cmd_index = cmd_seperated.index(finded_cmd_value)
-            # print(str(cmd_seperated[cmd_index - 1]))
             if str(cmd_seperated[cmd_index-1]).find(magic_word)>-1:
+                for i in dc.dcl.command_list:
+                    if i.command_name==finded_cmd_value:
+                        i.exec()
                 print('----------')
                 print('cmd_line:', cmd_line)
                 print('cmd_seperated:',cmd_seperated)
