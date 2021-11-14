@@ -1,0 +1,4 @@
+function sqrt(a,b,c,d,e,f,g)
+{
+return a*a;
+};

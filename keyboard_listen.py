@@ -1,8 +1,11 @@
+import string
+
 from pynput.keyboard import Key, Listener
 import duck_console as dc
 
 def on_press(key):
-    dc.append_keys(key)
+    if key not in [Key.backspace,Key.enter]:
+        dc.append_keys(key)
 
 def on_release(key):
     if key == Key.esc:

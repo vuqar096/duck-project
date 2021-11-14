@@ -1,28 +1,32 @@
-# from pynput import keyboard
+from os.path import join
+import py_mini_racer
+import functions
 
+context = py_mini_racer.MiniRacer()
 
 class command:
 
-    global command_types
-    command_types = ['copypast', 'application']
+
     global command_list
     command_list = []
 
-
-    def __init__(self, command_name, command_type, command_func):
-
+    def __init__(self, command_name):
+        global context
         if len(command_name) > 2:
             self.command_name = command_name
         else:
             raise ValueError('command name must be at least 3 charater.')
-        if command_type in command_types:
-            self.command_type = command_type
-        else:
-            raise ValueError('command type is not correct.')
-        self.command_func = command_func
+
+        # load command script
+        self.command_script = open(join('extensions',command_name+'.dext'),'r').read()
+        get_argument_names = open(r'dictionaries/get_argument_names.js', 'r').read()
+        self.argument_count = context.eval(self.command_script + command_name + '.length')
+        self.argument_names = context.eval(get_argument_names + self.command_script + 'get_argument_names(' + command_name + ').toString()')
+        #
         command_list.append(self)
 
     def exec(self):
-        self.command_func(self)
-
-    ####### built-in functions ########
+        None
+        # all_text
+        # left_text
+        # right_text

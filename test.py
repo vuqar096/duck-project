@@ -1,1 +1,1 @@
-print('vuqar'[-1:])
+print('vuqar yaxsi oglandir'.index('yaxsi'))

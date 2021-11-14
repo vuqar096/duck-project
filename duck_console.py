@@ -1,8 +1,6 @@
 cmd_line = []
 cmd_seperated = []
 
-command1 = []
-variable1 = []
 
 global magic_word
 magic_word = 'duck'
@@ -42,45 +40,22 @@ def append_keys(key_code):
 
 
 
-def check_command1(key):
-    global command1
-
-    if len(command1) > 0:
-        command1.append(key)
-        if len(command1) == 10:
-            command1.clear()
-        command = "".join(command1[1:len(command1)])
-        last_symbol = command1[-1:]
-        import duck_commands as dcm
-        if command in dcm.command_list and last_symbol=='*':
-            for i in dcm.dcl.command_list:
-                # i.exec()
-                sound('beep')
-                variable1.clear()
-                variable1.append('x')
-
-            command1.clear()
-
 def check_command(x):
     import duck_commands as dc
+    import keyboard_ctrl as kc
     global magic_word
     global cmd_line
-    try:
-        finded_cmd_value = ''.join([i for i in x if len([a for a in dc.command_list if i == a]) > 0])
-        if finded_cmd_value!='':
-            cmd_index = cmd_seperated.index(finded_cmd_value)
-            if str(cmd_seperated[cmd_index-1]).find(magic_word)>-1:
-                for i in dc.dcl.command_list:
-                    if i.command_name==finded_cmd_value:
-                        i.exec()
-                print('----------')
-                print('cmd_line:', cmd_line)
-                print('cmd_seperated:',cmd_seperated)
-                print('cmd_index:',cmd_index)
-            cmd_line = []
+    finded_cmd_value = ''.join([i for i in x if len([a for a in dc.command_list if i == a.command_name]) > 0])
+    if finded_cmd_value!='':
+        cmd_index = cmd_seperated.index(finded_cmd_value)
+        command_lenght = (''.join(cmd_line).index(finded_cmd_value) + len(finded_cmd_value) - ''.join(cmd_line).index('duck'))
+        kc.npress(kc.Key.backspace,command_lenght)
+        if str(cmd_seperated[cmd_index-1]).find(magic_word)>-1:
+            for i in dc.dcl.command_list:
+                if i.command_name==finded_cmd_value:
+                    i.exec()
+        cmd_line = []
 
-    except:
-        None
 
 
 def check_duck():
@@ -88,5 +63,3 @@ def check_duck():
         if cmd_seperated[-1][-4:] == magic_word:
             print('duck activated2')
             sound('beep')
-            command1.clear()
-            command1.append('x')
