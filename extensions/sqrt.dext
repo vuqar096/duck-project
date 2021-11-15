@@ -1,4 +1,4 @@
-function sqrt(a,b,c,d,e,f,g)
+function sqrt(a,b)
 {
 return a*a;
 };

@@ -1,0 +1,6 @@
+function msg1(name,days_count)
+{
+x = 'Salam '+name+' bəy, Sizin '+days_count+' gün məzuniyyət müddətiniz qalıb.';
+y = ['text/'+x].concat(['text/'+x]);
+return JSON.stringify(y);
+};

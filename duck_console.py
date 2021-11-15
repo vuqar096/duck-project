@@ -1,3 +1,5 @@
+import functions
+
 cmd_line = []
 cmd_seperated = []
 
@@ -28,7 +30,7 @@ def append_keys(key_code):
     global cmd_line, cmd_seperated
     key = str(key_code).replace(r"'",'')
     key = key2asterix(key)
-    if len(cmd_line) == 20:
+    if len(cmd_line) == 50:
         cmd_line.pop(0)
         cmd_line.append(key)
     else:
@@ -48,13 +50,16 @@ def check_command(x):
     finded_cmd_value = ''.join([i for i in x if len([a for a in dc.command_list if i == a.command_name]) > 0])
     if finded_cmd_value!='':
         cmd_index = cmd_seperated.index(finded_cmd_value)
-        command_lenght = (''.join(cmd_line).index(finded_cmd_value) + len(finded_cmd_value) - ''.join(cmd_line).index('duck'))
-        kc.npress(kc.Key.backspace,command_lenght)
-        if str(cmd_seperated[cmd_index-1]).find(magic_word)>-1:
+
+        command_lenght = (''.join(cmd_line).rfind(finded_cmd_value) + len(finded_cmd_value) - ''.join(cmd_line).rfind(magic_word))
+
+        if '*'.join(cmd_seperated).rfind(magic_word)<'*'.join(cmd_seperated).rfind(finded_cmd_value) and '*'.join(cmd_seperated).rfind(magic_word)!=-1:
+
+            kc.npress(kc.Key.backspace, command_lenght + 1)
             for i in dc.dcl.command_list:
                 if i.command_name==finded_cmd_value:
-                    i.exec()
-        cmd_line = []
+                    i.exec(functions.get_arguments(cmd_line,magic_word=magic_word,finded_cmd_value=finded_cmd_value))
+                    cmd_line.clear()
 
 
 
