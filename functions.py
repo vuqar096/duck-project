@@ -1,17 +1,34 @@
-#
-# def copy(data):
-#     import win32clipboard
-#     win32clipboard.OpenClipboard()
-#     win32clipboard.EmptyClipboard()
-#     win32clipboard.SetClipboardText(data)
-#     win32clipboard.CloseClipboard()
-#
-# def past():
-#     import win32clipboard
-#     win32clipboard.OpenClipboard()
-#     data = win32clipboard.GetClipboardData()
-#     win32clipboard.CloseClipboard()
-#     return data
+def copy(data):
+    import win32clipboard
+    win32clipboard.OpenClipboard()
+    win32clipboard.EmptyClipboard()
+    win32clipboard.SetClipboardText(data)
+    win32clipboard.CloseClipboard()
+
+def past():
+    import win32clipboard
+    win32clipboard.OpenClipboard()
+    data = win32clipboard.GetClipboardData()
+    win32clipboard.CloseClipboard()
+    return data
+
+def btoa(data):
+    import base64
+    x_bytes = data.encode("utf-8")
+    base64_bytes = base64.b64encode(x_bytes)
+    return base64_bytes.decode("utf-8")
+
+def atob(base64_bytes):
+    import base64
+    x_bytes2 = base64.b64decode(base64_bytes)
+    return x_bytes2.decode("utf-8")
+
+
+
+def copy2clip(txt):
+    import subprocess
+    cmd='chcp 65001 |echo '+txt.strip()+'|clip'
+    return subprocess.check_call(cmd, shell=True)
 
 def get_arguments(x,magic_word,finded_cmd_value):
     try:
