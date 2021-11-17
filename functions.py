@@ -23,13 +23,6 @@ def atob(base64_bytes):
     x_bytes2 = base64.b64decode(base64_bytes)
     return x_bytes2.decode("utf-8")
 
-
-
-def copy2clip(txt):
-    import subprocess
-    cmd='chcp 65001 |echo '+txt.strip()+'|clip'
-    return subprocess.check_call(cmd, shell=True)
-
 def get_arguments(x,magic_word,finded_cmd_value):
     try:
         join_x = ''.join(x)
@@ -57,3 +50,17 @@ def az_lat(x):
     for letters in b:
         x = x.replace(letters,a[b.index(letters)])
     return x
+
+def implement(extension_result):
+    import json
+    import pyperclip as clip
+    import keyboard_ctrl as kc
+    clipboard_temp = clip.paste()
+    for action in json.loads(extension_result):
+        action_type = action[0:str(action).find('/')]
+        action_value = action[str(action).find('/') + 1:]
+        if action_type == 'text':
+            clip.copy(action_value)
+            kc.press_combination(kc.Key.ctrl.value,'v')
+            clip.copy(clipboard_temp)
+        elif action_type == 'keys':
