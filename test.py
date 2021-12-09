@@ -14,4 +14,4 @@ def one_tuple(tuple_x):
         return tuple_x
 
 x = 15, 3
-print(15,3)
+print(x)

@@ -68,6 +68,4 @@ def implement(extension_result):
             kc.press_combination(kc.Key.ctrl.value,'v')
             clip.copy(clipboard_temp)
         elif action_type == 'keys':
-            # kc.press_combination(one_tuple(tuple([ifnone(key_dict.get(value),value) for value in str(action_value).split('+')])))
-            print(one_tuple(tuple([ifnone(key_dict.get(value), value) for value in str(action_value).split('+')])))
-            print((kc.Key.enter,'p'))
+            kc.press_combination(*one_tuple(tuple([ifnone(key_dict.get(value), value) for value in str(action_value).split('+')])))
