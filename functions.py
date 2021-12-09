@@ -1,17 +1,3 @@
-def copy(data):
-    import win32clipboard
-    win32clipboard.OpenClipboard()
-    win32clipboard.EmptyClipboard()
-    win32clipboard.SetClipboardText(data)
-    win32clipboard.CloseClipboard()
-
-def past():
-    import win32clipboard
-    win32clipboard.OpenClipboard()
-    data = win32clipboard.GetClipboardData()
-    win32clipboard.CloseClipboard()
-    return data
-
 def btoa(data):
     import base64
     x_bytes = data.encode("utf-8")
@@ -51,11 +37,29 @@ def az_lat(x):
         x = x.replace(letters,a[b.index(letters)])
     return x
 
+def ifnone(x,y):
+    if x is None:
+        return y
+    else:
+        return x
+
+def one_tuple(tuple_x):
+    if len(tuple_x) == 1:
+        return tuple_x[0]
+    else:
+        return tuple_x
+
 def implement(extension_result):
     import json
     import pyperclip as clip
     import keyboard_ctrl as kc
     clipboard_temp = clip.paste()
+    key_dict = {'backspace': kc.Key.backspace,
+     'enter': kc.Key.enter,
+     'ctrl': kc.Key.ctrl.value,
+     'shift': kc.Key.shift,
+     'alt': kc.Key.alt
+    }
     for action in json.loads(extension_result):
         action_type = action[0:str(action).find('/')]
         action_value = action[str(action).find('/') + 1:]
@@ -64,3 +68,6 @@ def implement(extension_result):
             kc.press_combination(kc.Key.ctrl.value,'v')
             clip.copy(clipboard_temp)
         elif action_type == 'keys':
+            # kc.press_combination(one_tuple(tuple([ifnone(key_dict.get(value),value) for value in str(action_value).split('+')])))
+            print(one_tuple(tuple([ifnone(key_dict.get(value), value) for value in str(action_value).split('+')])))
+            print((kc.Key.enter,'p'))

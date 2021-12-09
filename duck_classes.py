@@ -1,6 +1,7 @@
 from os.path import join
 import py_mini_racer
 
+import functions
 import keyboard_ctrl
 
 context = py_mini_racer.MiniRacer()
@@ -31,5 +32,5 @@ class command:
     def exec(self, arguments):
         if len(arguments) == len([arg for arg in self.argument_names if arg not in preserved_arguments]):
 
-            keyboard_ctrl.implement(context.eval(self.command_script + self.command_name + '(' + ','.join(['\'' + i + '\'' for i in arguments]) + ')'))
+            functions.implement(context.eval(self.command_script + self.command_name + '(' + ','.join(['\'' + i + '\'' for i in arguments]) + ')'))
 
