@@ -5,7 +5,7 @@ cmd_seperated = []
 
 
 global magic_word
-magic_word = 'duck'
+magic_word = 'dex'
 
 
 print('duck_console started')
@@ -64,7 +64,7 @@ def check_command(x):
 
 
 def check_duck():
-    if len(cmd_line) > 3:
-        if cmd_seperated[-1][-4:] == magic_word:
+    if len(cmd_line) >= 3:
+        if cmd_seperated[-1][(len(magic_word)*(-1)):] == magic_word:
             print('duck activated2')
             sound('beep')

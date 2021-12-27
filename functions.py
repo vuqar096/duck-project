@@ -1,3 +1,6 @@
+import time
+
+
 def btoa(data):
     import base64
     x_bytes = data.encode("utf-8")
@@ -49,6 +52,34 @@ def one_tuple(tuple_x):
     else:
         return tuple_x
 
+def decode(*args):
+    inputx = None
+    result = None
+    if len(args)%2!=1:
+        inputx = args[0:len(args)-1]
+    else:
+        inputx = args
+    for arg_a,arg_b in zip(inputx[1::2],inputx[2::2]):
+        if arg_a == inputx[0]:
+            result = arg_b
+            break
+    if len(args)%2!=1 and result == None:
+        result = args[-1]
+    return result
+
+def preserved_argument_list(argument_name):
+        import keyboard_ctrl as kc
+        import pyperclip as clip
+        clipboard_temp = clip.paste()
+
+        kc.press_combination(*tuple(decode(argument_name.split('_')[1],'text',[kc.Key.ctrl,kc.Key.shift],[kc.Key.shift])+[decode(argument_name.split('_')[0],'left',kc.Key.home,kc.Key.end)] ))
+        kc.press_combination(kc.Key.ctrl.value,'c')
+        kc.npress(decode(argument_name.split('_')[0],'left',kc.Key.right,kc.Key.left),2)
+
+        argument_value = clip.paste()
+        clip.copy(clipboard_temp)
+        return argument_value
+
 def implement(extension_result):
     import json
     import pyperclip as clip
@@ -60,6 +91,7 @@ def implement(extension_result):
      'shift': kc.Key.shift,
      'alt': kc.Key.alt
     }
+    preserved_argument_list('right_paragraph')
     for action in json.loads(extension_result):
         action_type = action[0:str(action).find('/')]
         action_value = action[str(action).find('/') + 1:]

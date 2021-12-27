@@ -1,6 +1,6 @@
-function msg2(left_text)
+function msg3(left_text)
 {
-x = left_text.toUpperCase();
+x = left_text.toLowerCase();
 y = [
 'keys/ctrl+a',
 'text/'+x,

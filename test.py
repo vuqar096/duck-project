@@ -1,17 +1,20 @@
-import keyboard_ctrl as kc
-
-key_dict = {'backspace': kc.Key.backspace,
-            'enter': kc.Key.enter,
-            'ctrl': kc.Key.ctrl.value,
-            'shift': kc.Key.shift,
-            'alt': kc.Key.alt
-            }
-
-def one_tuple(tuple_x):
-    if len(tuple_x) == 1:
-        return tuple_x[0]
+def decode(*args):
+    inputx = None
+    result = None
+    if len(args)%2!=1:
+        inputx = args[0:len(args)-1]
     else:
-        return tuple_x
+        inputx = args
+    for arg_a,arg_b in zip(inputx[1::2],inputx[2::2]):
+        if arg_a == inputx[0]:
+            result = arg_b
+            break
+    if len(args)%2!=1 and result == None:
+        result = args[-1]
+    return result
 
-x = 15, 3
-print(x)
+# name='esed'
+# print(decode(name,'vuqar',5,'sefer',3,'esed',8,10))
+
+xdic = {'name':'Vuqar','yas':'30'}
+print(','.join([key+'=\''+value+'\'' for key,value in xdic.items()]))
