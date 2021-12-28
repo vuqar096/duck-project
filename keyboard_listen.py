@@ -11,7 +11,6 @@ def on_press(key):
     if key == Key.backspace:
         try:
             dc.cmd_line.pop()
-            print(dc.cmd_line)
         except:
             None
 

@@ -17,4 +17,7 @@ def decode(*args):
 # print(decode(name,'vuqar',5,'sefer',3,'esed',8,10))
 
 xdic = {'name':'Vuqar','yas':'30'}
-print(','.join([key+'=\''+value+'\'' for key,value in xdic.items()]))
+x = ','.join([key+'=\'\n'+value+'\'' for key,value in xdic.items()])
+y = 'vuq\r\nar'
+print(y.replace('\r',''))
+print([a+b for a,b in zip(y[0::2],y[1::2])])

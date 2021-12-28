@@ -41,6 +41,6 @@ class command:
             for arg in arg_y_list:
                 arguments_dict[arg] = functions.preserved_argument_list(arg)
         print(self.command_script + self.command_name + '(' + ','.join([key+'=\''+value+'\'' for key,value in arguments_dict.items()]) + ')')
-        # functions.implement(context.eval(self.command_script + self.command_name + '(' + ','.join([key+'=\''+value+'\'' for key,value in arguments_dict.items()]) + ')'))
+        functions.implement(context.eval(self.command_script + self.command_name + '(' + ','.join([key+'=\''+value+'\'' for key,value in arguments_dict.items()]) + ')'))
 
 

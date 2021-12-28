@@ -76,7 +76,7 @@ def preserved_argument_list(argument_name):
         kc.press_combination(kc.Key.ctrl.value,'c')
         kc.npress(decode(argument_name.split('_')[0],'left',kc.Key.right,kc.Key.left),2)
 
-        argument_value = clip.paste()
+        argument_value = "".join([i.replace('\r','').replace('\n','\\\\n') for i in list([i for i in clip.paste()])])
         clip.copy(clipboard_temp)
         return argument_value
 
@@ -96,7 +96,7 @@ def implement(extension_result):
         action_type = action[0:str(action).find('/')]
         action_value = action[str(action).find('/') + 1:]
         if action_type == 'text':
-            clip.copy(action_value)
+            clip.copy(action_value.replace('\\n','\n'))
             kc.press_combination(kc.Key.ctrl.value,'v')
             clip.copy(clipboard_temp)
         elif action_type == 'keys':

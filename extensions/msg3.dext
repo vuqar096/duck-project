@@ -1,6 +1,6 @@
 function msg3(left_text)
 {
-x = left_text.toLowerCase();
+x = atob(left_text);
 y = [
 'keys/ctrl+a',
 'text/'+x,
