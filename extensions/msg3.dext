@@ -1,9 +1,0 @@
-function msg3(left_paragraph)
-{
-x = left_paragraph.toLowerCase();
-y = [
-'keys/enter+enter',
-'text/'+x,
-];
-return JSON.stringify(y);
-};

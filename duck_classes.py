@@ -3,7 +3,6 @@ from os.path import join
 import py_mini_racer
 
 import functions
-import keyboard_ctrl
 
 context = py_mini_racer.MiniRacer()
 
@@ -40,9 +39,7 @@ class command:
                 arguments_dict[arg] = arguments[arg_x_list.index(arg)]
         if len(arg_y_list) > 0:
             for arg in arg_y_list:
-                arguments_dict[arg] = functions.preserved_argument_list(arg)
+                arguments_dict[arg] = functions.preserved_argument_list_advanced(arg)
 
         z = (self.command_script + self.command_name + '(' + ','.join([key+'='+json.dumps(value) for key,value in arguments_dict.items()]) + ')')
-        # print(json.loads(context.eval(z)))
-        # print(json.loads("\""+json.loads(context.eval(z))[1].split('/')[1]+"\""))
         functions.implement(context.eval(z))

@@ -71,36 +71,50 @@ def preserved_argument_list(argument_name):
         import keyboard_ctrl as kc
         import pyperclip as clip
         clipboard_temp = clip.paste()
-
-        kc.press_combination(*tuple(decode(argument_name.split('_')[1],'text',[kc.Key.ctrl,kc.Key.shift],[kc.Key.shift])+[decode(argument_name.split('_')[0],'left',kc.Key.home,kc.Key.end)] ))
-        kc.press_combination(kc.Key.ctrl.value,'c')
-        kc.npress(decode(argument_name.split('_')[0],'left',kc.Key.right,kc.Key.left),2)
+        if argument_name.split('_')[0] in ('left','right') and argument_name.split('_')[1] in ('text','paragraph'):
+            kc.press_combination(*tuple(decode(argument_name.split('_')[1],'text',[kc.Key.ctrl,kc.Key.shift],[kc.Key.shift])+[decode(argument_name.split('_')[0],'left',kc.Key.home,kc.Key.end)] ))
+            kc.press_combination(kc.Key.ctrl.value,'c')
+            kc.npress(decode(argument_name.split('_')[0],'left',kc.Key.right,kc.Key.left),2)
 
         argument_value = "".join([i.replace('\r','').replace('\n','\\\\n') for i in list([i for i in clip.paste()])])
         clip.copy(clipboard_temp)
         return argument_value
+
+def preserved_argument_list_advanced(argument_name):
+    if argument_name == 'all_text':
+        argument_value = (preserved_argument_list('left_text')+preserved_argument_list('right_text'))
+    else:
+        argument_value = preserved_argument_list(argument_name)
+    return argument_value
 
 def implement(extension_result):
     import json
     import pyperclip as clip
     import keyboard_ctrl as kc
     clipboard_temp = clip.paste()
-    key_dict = {'backspace': kc.Key.backspace,
-     'enter': kc.Key.enter,
-     'ctrl': kc.Key.ctrl.value,
-     'shift': kc.Key.shift,
-     'alt': kc.Key.alt
+    key_dict = {
+                'backspace': kc.Key.backspace,
+                'enter': kc.Key.enter,
+                'ctrl': kc.Key.ctrl.value,
+                'shift': kc.Key.shift,
+                'alt': kc.Key.alt,
+                'up': kc.Key.up,
+                'down': kc.Key.down,
+                'home': kc.Key.home,
+                'end': kc.Key.end
     }
 
     for action in json.loads(extension_result):
         action_type = action.split('/')[0]
         action_value = action.split('/')[1]
         if action_type == 'text':
-            clip.copy(json.loads("\""+action_value+"\"").replace('\\n','\n'))
-            print('value-',(json.loads("\""+action_value+"\"")))
-            time.sleep(0.05)
+            clip.copy(json.loads("\""+action_value+"\"").replace('\\n','\n').replace('\\N','\n'))
+            time.sleep(0.01)
             kc.press_combination(kc.Key.ctrl.value,'v')
-            time.sleep(0.05)
+            time.sleep(0.01)
             clip.copy(clipboard_temp)
         elif action_type == 'keys':
-            kc.press_combination(*one_tuple(tuple([ifnone(key_dict.get(value), value) for value in str(action_value).split('+')])))
+            if len(str(action_value).split('+'))>1:
+                kc.press_combination(*one_tuple(tuple([ifnone(key_dict.get(value), value) for value in str(action_value).split('+')])))
+            else:
+                kc.npress(ifnone(key_dict.get(action_value), action_value),2)
