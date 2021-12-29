@@ -2,7 +2,6 @@ function tupper(clipboard)
 {
 x = clipboard.toUpperCase();
 y = [
-'keys/enter',
 'text/'+x
 ];
 return JSON.stringify(y);

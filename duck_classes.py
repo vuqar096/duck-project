@@ -42,4 +42,5 @@ class command:
                 arguments_dict[arg] = functions.preserved_argument_list_advanced(arg)
 
         z = (self.command_script + self.command_name + '(' + ','.join([key+'='+json.dumps(value) for key,value in arguments_dict.items()]) + ')')
+        print(z)
         functions.implement(context.eval(z))
