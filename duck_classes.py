@@ -40,7 +40,6 @@ class command:
         if len(arg_y_list) > 0:
             for arg in arg_y_list:
                 arguments_dict[arg] = functions.preserved_argument_list_advanced(arg)
-
+        print(arguments_dict)
         z = (self.command_script + self.command_name + '(' + ','.join([key+'='+json.dumps(value) for key,value in arguments_dict.items()]) + ')')
-        print(z)
         functions.implement(context.eval(z))
