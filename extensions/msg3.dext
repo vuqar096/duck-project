@@ -1,8 +1,8 @@
-function msg3(left_text)
+function msg3(left_paragraph)
 {
-x = atob(left_text);
+x = left_paragraph.toLowerCase();
 y = [
-'keys/ctrl+a',
+'keys/enter+enter',
 'text/'+x,
 ];
 return JSON.stringify(y);

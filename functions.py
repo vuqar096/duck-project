@@ -91,13 +91,16 @@ def implement(extension_result):
      'shift': kc.Key.shift,
      'alt': kc.Key.alt
     }
-    preserved_argument_list('right_paragraph')
+
     for action in json.loads(extension_result):
-        action_type = action[0:str(action).find('/')]
-        action_value = action[str(action).find('/') + 1:]
+        action_type = action.split('/')[0]
+        action_value = action.split('/')[1]
         if action_type == 'text':
-            clip.copy(action_value.replace('\\n','\n'))
+            clip.copy(json.loads("\""+action_value+"\"").replace('\\n','\n'))
+            print('value-',(json.loads("\""+action_value+"\"")))
+            time.sleep(0.05)
             kc.press_combination(kc.Key.ctrl.value,'v')
+            time.sleep(0.05)
             clip.copy(clipboard_temp)
         elif action_type == 'keys':
             kc.press_combination(*one_tuple(tuple([ifnone(key_dict.get(value), value) for value in str(action_value).split('+')])))
