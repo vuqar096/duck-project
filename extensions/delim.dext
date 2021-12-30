@@ -4,7 +4,17 @@ x = clipboard;
 y = '';
 for (i in x.split('\n'))
 {
-y += i
+    if(i==0)
+    {
+        y += "'" + x.split('\n')[i].split('\r')[0] + "'";
+    }
+    else
+    {
+        if(x.split('\n')[i].split('\r')[0]!='')
+        {
+            y += ",'" + x.split('\n')[i].split('\r')[0] + "'";
+        }
+    };
 }
 z = [
 'text/'+y

@@ -106,15 +106,14 @@ def implement(extension_result):
     }
 
     for action in json.loads(extension_result):
-        action_type = action.split('/')[0]
-        action_value = action.split('/')[1]
+        action_type = action[0:4]
+        action_value = action[5:]
         if action_type == 'text':
-            print(action)
             clip.copy(action_value)
+
             time.sleep(0.01)
             kc.press_combination(kc.Key.ctrl.value,'v')
             time.sleep(0.01)
-            clip.copy(clipboard_temp)
         elif action_type == 'keys':
             if len(str(action_value).split('+'))>1:
                 kc.press_combination(*one_tuple(tuple([ifnone(key_dict.get(value), value) for value in str(action_value).split('+')])))
