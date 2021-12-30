@@ -110,7 +110,7 @@ def implement(extension_result):
         action_value = action.split('/')[1]
         if action_type == 'text':
             print(action)
-            clip.copy(json.loads(action_value))
+            clip.copy(action_value)
             time.sleep(0.01)
             kc.press_combination(kc.Key.ctrl.value,'v')
             time.sleep(0.01)

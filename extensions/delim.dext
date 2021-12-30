@@ -2,9 +2,9 @@ function delim(clipboard)
 {
 x = clipboard;
 y = '';
-for (i in x.split('\\\\n'))
+for (i in x.split('\n'))
 {
-if(i==0){y += `'` + x.split('\\\\n')[i] + `'`;} else {y += `,'` + x.split('\\\\n')[i] + `'`;}
+y += i
 }
 z = [
 'text/'+y
