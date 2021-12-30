@@ -1,0 +1,12 @@
+function xtab(command,clipboard)
+{
+
+raw = 'voen\tname\tyear\n9900028541\tVuqar MMC\t1996\n9900028542\tGunel MMC\t1994\n9900028543\tEsmer MMC\t1992';
+rows = raw.split('\n')
+
+
+z = [
+'text/'+x
+];
+return JSON.stringify(z);
+};

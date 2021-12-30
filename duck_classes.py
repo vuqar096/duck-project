@@ -34,12 +34,11 @@ class command:
         arguments = [i for i in arguments if i!='']
         arg_x_list = [arg for arg in self.argument_names if arg not in preserved_arguments]
         arg_y_list = [arg for arg in self.argument_names if arg     in preserved_arguments]
-        if len(arg_x_list) == self.argument_count & len(arguments) == len(arg_x_list):
+        if len(arg_x_list) == self.argument_count - len(arg_y_list) & len(arguments) == len(arg_x_list):
             for arg in arg_x_list:
                 arguments_dict[arg] = arguments[arg_x_list.index(arg)]
         if len(arg_y_list) > 0:
             for arg in arg_y_list:
                 arguments_dict[arg] = functions.preserved_argument_list_advanced(arg)
-        print(arguments_dict)
         z = (self.command_script + self.command_name + '(' + ','.join([key+'='+json.dumps(value) for key,value in arguments_dict.items()]) + ')')
         functions.implement(context.eval(z))

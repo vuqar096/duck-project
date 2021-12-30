@@ -17,8 +17,8 @@ def get_arguments(x,magic_word,finded_cmd_value):
         join_x = ''.join(x)
         duck_word_index = join_x.rindex(magic_word)
         cmd_word_index = join_x.rindex(finded_cmd_value)
-
-        return join_x[duck_word_index+len(magic_word)+1:cmd_word_index-1].split('*')
+        founded_after_magic_word = join_x[duck_word_index+len(magic_word):cmd_word_index-1].split('*')
+        return [i for i in founded_after_magic_word if i!='']
     except:
         print(x)
         print('error: get_arguments')
@@ -77,7 +77,6 @@ def preserved_argument_list(argument_name):
             kc.npress(decode(argument_name.split('_')[0],'left',kc.Key.right,kc.Key.left),2)
 
         argument_value = clip.paste()
-        print(argument_value)
         clip.copy(clipboard_temp)
         return argument_value
 
@@ -110,10 +109,11 @@ def implement(extension_result):
         action_value = action[5:]
         if action_type == 'text':
             clip.copy(action_value)
-
+            print(action_value)
             time.sleep(0.01)
             kc.press_combination(kc.Key.ctrl.value,'v')
-            time.sleep(0.01)
+            time.sleep(0.05)
+            clip.copy(clipboard_temp)
         elif action_type == 'keys':
             if len(str(action_value).split('+'))>1:
                 kc.press_combination(*one_tuple(tuple([ifnone(key_dict.get(value), value) for value in str(action_value).split('+')])))

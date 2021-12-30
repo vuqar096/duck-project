@@ -1,0 +1,8 @@
+function tlower(clipboard)
+{
+x = clipboard.toLowerCase();
+y = [
+'text/'+x
+];
+return JSON.stringify(y);
+};

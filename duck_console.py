@@ -36,10 +36,8 @@ def append_keys(key_code):
     else:
         cmd_line.append(key)
     cmd_seperated = ''.join(cmd_line).split('*')
-
     check_command(cmd_seperated)
     check_duck()
-
 
 
 def check_command(x):
